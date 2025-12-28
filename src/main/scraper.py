@@ -36,6 +36,7 @@ def parse_page(txt):
     soup = BeautifulSoup(txt, "html.parser")
     return soup
 
+
 # generate wiki graph: BFS out from a start node, adding pages
 # start: url, limit: int
 def generate_wiki_graph(start, limit):
@@ -46,7 +47,6 @@ def generate_wiki_graph(start, limit):
     frontier = FrontierQueue()
 
     frontier.push(start)
-
     # loop
     while frontier.size() > 0 and num_visited < limit: 
         # pop url
@@ -73,6 +73,7 @@ def generate_wiki_graph(start, limit):
                 frontier.push(link)
 
         # repeat
+    
         num_visited += 1
 
     return wg
