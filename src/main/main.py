@@ -20,6 +20,16 @@ def main():
     with open('wiki_page_test.json', "w") as f:
         json.dump(wiki_page.to_dict(), f, indent=2)
 
+    # test json deserializing
+    with open('wiki_page_test.json', "r") as f:
+        loaded_data = json.load(f)
+    
+    loaded_obj = WikiPage.from_dict(loaded_data)
+    print(wiki_page.__repr__())
+    print(loaded_obj.__repr__())
+
+    print(wiki_page == loaded_obj)
+
 
 
 

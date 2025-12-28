@@ -73,19 +73,28 @@ class WikiPage:
         links_data = data['links']
         links_arr = list(links_data)
 
-        title_vector_data = data['title_vector']
-        title_vector_dtype = np.dtype(title_vector_data['dtype'])
-        vector_data = vector_data['title_vector_data']
-        vector_arr = list(vector_data)
-        np_vector = np.array(vector_arr, dtype=title_vector_dtype)
+        title_vector_dict = data['title_vector']
+        title_vector_dtype = np.dtype(title_vector_dict['dtype'])
+        title_vector_data = title_vector_dict['title_vector_data']
+        title_vector_arr = list(title_vector_data)
+        title_np_vector = np.array(title_vector_arr, dtype=title_vector_dtype)
 
         return cls(
             id=id,
             title=title,
             links=links_arr,
-            title_vector=np_vector
+            title_vector=title_np_vector
         )
 
     # repr method
     def __repr__(self):
-        return f"id: {self.id!r}, title: {self.title!r}"
+        return f"id: {self.id!r}, title: {self.title!r}, vector: {self.title_vector!r}"
+
+    # overide equality method
+    def __eq__(self, other):
+        if not isinstance(other, WikiPage):
+            return False
+        return (self.title == other.title and 
+                self.id == other.id and 
+                self.links == other.links and 
+                np.array_equal(self.title_vector, other.title_vector))
